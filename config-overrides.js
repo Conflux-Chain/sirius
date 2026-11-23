@@ -24,6 +24,31 @@ function configureCssNano(minimizer) {
 }
 
 module.exports = function (config, mode) {
+  // Rebuild cached modules when our loader overrides change, as CRA does for its own config.
+  config.cache.buildDependencies.config.push(__filename);
+  // These vendor bundles reference missing sources or contain a generated map URL in a string.
+  const sourceMapRule = config.module.rules.find(
+    rule => rule.loader === require.resolve('source-map-loader'),
+  );
+  if (sourceMapRule) {
+    sourceMapRule.exclude = [
+      sourceMapRule.exclude,
+      /[\\/]@conflux-dev[\\/]conflux-address-js[\\/]node_modules[\\/]jsbi[\\/]dist[\\/]jsbi-umd\.js$/,
+      /[\\/]@cfxjs[\\/]antd[\\/]dist[\\/]@cfxjs[\\/]antd\.css$/,
+      /[\\/]ace-builds[\\/]src-noconflict[\\/]worker-coffee\.js$/,
+    ];
+  }
+
+  // The network logos are used as image URLs. Emit the originals without generating JSX.
+  config.module.rules
+    .find(rule => rule.oneOf)
+    .oneOf.unshift({
+      include: ['logo.svg', 'logo-testnet.svg'].map(name =>
+        path.resolve(__dirname, 'src/images/core-space', name),
+      ),
+      type: 'asset/resource',
+    });
+
   // Webpack 5 resolves absolute package aliases before their package metadata.
   const moduleScope = config.resolve.plugins.find(
     plugin => plugin.constructor.name === 'ModuleScopePlugin',
@@ -243,6 +268,48 @@ module.exports = function (config, mode) {
       ],
     },
   });
+};
+
+module.exports.devServer = createConfig => (proxy, allowedHost) => {
+  const {
+    https,
+    onBeforeSetupMiddleware,
+    onAfterSetupMiddleware,
+    ...config
+  } = createConfig(proxy, allowedHost);
+  config.server =
+    typeof https === 'object'
+      ? { type: 'https', options: https }
+      : https
+      ? 'https'
+      : 'http';
+  config.allowedHosts = 'auto';
+  delete config.headers; // Use same-origin access for development resources.
+  // Keep the trailing slash CRA strips from the middleware path (GHSA-g84c-rxfj-3j2c).
+  config.devMiddleware.publicPath = require('react-scripts/config/paths').publicUrlOrPath;
+  config.setupMiddlewares = (middlewares, devServer) => {
+    const { Router } = require('express');
+    const before = Router();
+    const after = Router();
+    onBeforeSetupMiddleware({
+      app: before,
+      // CRA reads `_stats` on each overlay request; WDS 5 updates `stats` on rebuild.
+      get _stats() {
+        return devServer.stats;
+      },
+    });
+    onAfterSetupMiddleware({ app: after });
+    // Let v5 check the request before CRA's source-map and proxy handlers run.
+    const index = middlewares.findIndex(
+      entry => entry.name === 'webpack-dev-middleware',
+    );
+    if (index < 0)
+      throw new Error('Cannot locate webpack-dev-middleware for CRA setup');
+    middlewares.splice(index, 0, { name: 'cra-before', middleware: before });
+    middlewares.push({ name: 'cra-after', middleware: after });
+    return middlewares;
+  };
+  return config;
 };
 
 // react-app-rewired concatenates package.json Jest arrays with CRA defaults.

@@ -27,7 +27,7 @@ export function CFXTransfer({ preview = false }: ChildProps) {
         const data2: any = [];
         const data3: any = [];
 
-        data?.list?.map((d, i) => {
+        data?.list?.forEach((d, i) => {
           const t = dayjs.utc(d.statTime).valueOf();
           data1.push([t, new BigNumber(d.amount).div(1e18).toNumber()]);
           data2.push([t, Number(d.userCount)]);

@@ -30,7 +30,7 @@ export function Token({
         const data4: any = [];
         const token = data?.token || {};
 
-        data?.list?.map((d, i) => {
+        data?.list?.forEach((d, i) => {
           const t = dayjs.utc(d.day).valueOf();
           data1.push([
             t,

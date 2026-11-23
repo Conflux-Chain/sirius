@@ -26,7 +26,7 @@ export function Contract({
         const data2: any = [];
         const data3: any = [];
 
-        data?.list?.map((d, i) => {
+        data?.list?.forEach((d, i) => {
           const t = dayjs.utc(d.statTime).valueOf();
           data1.push([t, Number(d.tx)]);
           data2.push([t, Number(d.cfxTransfer)]);

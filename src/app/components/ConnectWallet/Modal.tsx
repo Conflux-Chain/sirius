@@ -21,7 +21,7 @@ import iconFluent from './assets/fluent.svg';
 import iconClose from './assets/close.svg';
 import iconLoading from './assets/loading.svg';
 
-interface Modal {
+interface ModalProps {
   className?: string;
   show: boolean;
   onClose?: () => void;
@@ -31,7 +31,7 @@ export const Modal = ({
   className,
   show = false,
   onClose = () => {},
-}: Modal) => {
+}: ModalProps) => {
   const { t } = useTranslation();
   const { login, authConnectStatus, account, installed } = usePortal();
   const { isValid } = useCheckHook();

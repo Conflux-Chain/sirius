@@ -6,6 +6,16 @@ import { ContractOrTokenInfo } from 'app/components/Contract/Loadable';
 import { useCMContractQuery } from 'utils/api';
 import { isCoreContractAddress } from 'utils';
 
+const fields = [
+  'address',
+  'type',
+  'name',
+  'website',
+  'token',
+  'typeCode',
+  'verifyInfo',
+];
+
 export function Contract(props) {
   const { t } = useTranslation();
   const [contractDetail, setContractDetail] = useState({});
@@ -13,18 +23,8 @@ export function Contract(props) {
   const [type, setType] = useState('create');
   const matchParams = props.match.params;
   const contractAddress = matchParams.contractAddress;
-  const fields = [
-    'address',
-    'type',
-    'name',
-    'website',
-    'token',
-    'typeCode',
-    'verifyInfo',
-  ];
   const params = useMemo(() => ({ address: contractAddress, fields }), [
     contractAddress,
-    fields,
   ]);
   const { data } = useCMContractQuery(
     params,

@@ -27,7 +27,7 @@ export function DailyRewardInfo({ preview = false }: ChildProps) {
         const data3: any = [];
 
         // TODO, data order issue, need to change by open api
-        data?.list.reverse().map((d, i) => {
+        data?.list.reverse().forEach((d, i) => {
           const t = dayjs.utc(d.statDay).valueOf();
           data1.push([t, Number(d.rewardAccounts)]);
           data2.push([

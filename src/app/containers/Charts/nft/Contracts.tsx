@@ -27,7 +27,7 @@ export function Contracts({ preview = false }: ChildProps) {
         const data1: any = [];
         const data2: any = [];
 
-        data?.list?.map((d, i) => {
+        data?.list?.forEach((d, i) => {
           const t = dayjs.utc(d.statTime).valueOf();
           data1.push([t, Number(d.count)]);
           data2.push([t, Number(d.total)]);

@@ -24,7 +24,7 @@ export function DailyCFXTransferCount({ preview = false }: ChildProps) {
         const data1: any = [];
         const data2: any = [];
 
-        data?.list?.map((d, i) => {
+        data?.list?.forEach((d, i) => {
           const t = dayjs.utc(d.day).valueOf();
           data1.push([
             t,

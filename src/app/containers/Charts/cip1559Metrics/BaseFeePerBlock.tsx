@@ -20,7 +20,7 @@ export function BaseFeePerBlock({ preview = false }: ChildProps) {
       formatter: data => {
         const data1: any = [];
 
-        data?.list?.map((d, i) => {
+        data?.list?.forEach((d, i) => {
           data1.push({
             x: d.epochNumber * 10000 + d.blockIndex,
             y: Number(new BigNumber(d.baseFee).div(1e9).toNumber()),

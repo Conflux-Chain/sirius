@@ -25,10 +25,6 @@ interface FooterProps {
   pathname: string;
 }
 
-interface QueryProps {
-  [index: string]: string;
-}
-
 interface TitleProps {
   address: string;
   total: number;
