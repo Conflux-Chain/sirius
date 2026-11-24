@@ -1282,7 +1282,7 @@
   dependencies:
     core-js-pure "^3.48.0"
 
-"@babel/runtime@^7.1.2", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.2", "@babel/runtime@^7.10.4", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.10", "@babel/runtime@^7.14.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.20.0", "@babel/runtime@^7.23.2", "@babel/runtime@^7.24.1", "@babel/runtime@^7.3.1", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.6", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.2", "@babel/runtime@^7.10.4", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.10", "@babel/runtime@^7.14.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.20.0", "@babel/runtime@^7.23.2", "@babel/runtime@^7.24.1", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.6", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
   version "7.29.14"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.29.14.tgz#9ad0cc2addbbc8c46adaec9e90b21bb76d42b483"
   integrity sha512-Y5tqevQaUAZhhj82BpYMNC1ssvLQTVAfwKdm8iy8qwmhvC2/CpcAu8OC+QEtjM7pMk7knx83u1Qj8gzkicyelw==
@@ -9544,12 +9544,10 @@ i18next-browser-languagedetector@^7.2.1:
   dependencies:
     "@babel/runtime" "^7.23.2"
 
-i18next@19.3.4:
-  version "19.3.4"
-  resolved "https://registry.npmjs.org/i18next/-/i18next-19.3.4.tgz"
-  integrity sha512-ef7AxxutzdhBsBNugE9jgqsbwesG1muJOtZ9ZrPARPs/jXegViTp4+8JCeMp8BAyTIo1Zn0giqc8+2UpqFjU0w==
-  dependencies:
-    "@babel/runtime" "^7.3.1"
+i18next@26.3.4:
+  version "26.3.4"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-26.3.4.tgz#a2e8540b0a1a6004eba525c05faa89c256fb57c8"
+  integrity sha512-pa7m0d7pBDqGHZxljT+WPFeyFgQ7P7SciPPo1tTqYuO0z4sqADYhwnBESmmGp/wEof1inwdls/k8ZgTg8rxFHA==
 
 iconv-lite@0.4.24, iconv-lite@~0.4.24:
   version "0.4.24"
