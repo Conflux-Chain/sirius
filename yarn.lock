@@ -1514,10 +1514,10 @@
     react-popper "^2.2.3"
     styled-jsx "^3.2.5"
 
-"@cfxjs/sirius-next-common@0.7.1":
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.7.1.tgz#1e788fdae123ab4c81154ab33f366d8e91039d0d"
-  integrity sha512-2zmK4Ueo79U0hJok4PiZ0J2rLwN7T5E29lUPJ5eUWGL+2nqz9T5moinCffg5/WkOcAhRrOGfgK2S9pUzfA3SoA==
+"@cfxjs/sirius-next-common@0.7.2":
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.7.2.tgz#8408f83079a2a769394da8085d4224d66e98b321"
+  integrity sha512-RQfwrMqv07HxInaOABUR644cg2EA4V/OfRVdzfdebPVaZrYk2nIRu/WeitHnI5cG8xmUUrz2fnG16eAa0PFBWA==
   dependencies:
     "@cfx-kit/dapp-utils" "^0.2.12"
     "@cfx-kit/ui-components" "^0.0.18"
@@ -1527,7 +1527,7 @@
     "@zeit-ui/react-icons" "^1.3.1"
     ace-builds "1.4.12"
     bignumber.js "^9.1.2"
-    cive "^0.8.1"
+    cive "^0.8.3"
     clsx "^2.1.0"
     copy-to-clipboard "3.3.3"
     copyfiles "^2.4.1"
@@ -6339,17 +6339,17 @@ citty@^0.1.5, citty@^0.1.6:
   dependencies:
     consola "^3.2.3"
 
-cive@^0.8.1:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/cive/-/cive-0.8.1.tgz#f2c423d2372a9fddaafa26ba09b2eadd0d26557e"
-  integrity sha512-P7Ll9gFTCt6jHsC13VRRAgvEefQSapRMMJSKFvGcEUmtmaNXl/g2jwxcWDNYSGoZhf1HjufEeO1wjlt26AIMQw==
+cive@^0.8.3:
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/cive/-/cive-0.8.3.tgz#264d605e67b8177423d28981b2a4040c69fa8f30"
+  integrity sha512-cDUoxbKich3wyTldrivK+BALONXhCiNDZFp9HuO9NktBhqWOF+lvkt5zcYvsZ2DU0TbqKeDJXCj0SSY9raWNFw==
   dependencies:
     "@noble/curves" "^1.6.0"
     "@noble/hashes" "^1.5.0"
     "@scure/bip32" "^1.5.0"
     "@scure/bip39" "^1.4.0"
-    viem "^2.20.0"
-    zod "^3.23.8"
+    viem "^2.58.4"
+    zod "^4.6.6"
 
 cjs-module-lexer@^1.0.0:
   version "1.4.3"
@@ -12108,6 +12108,20 @@ ox@0.14.13:
     abitype "^1.2.3"
     eventemitter3 "5.0.1"
 
+ox@0.14.67:
+  version "0.14.67"
+  resolved "https://registry.yarnpkg.com/ox/-/ox-0.14.67.tgz#c113fc3aa87194f7a45c68bbb8e58cae639d0476"
+  integrity sha512-6v6UlwgsmiyTujZp0aVDuN8uIBAtl/QZadBADFRZ2zp1+CM9TqDzd+rPKJ5PYvWPlCvz8JvoO9dTr42+1PhBhA==
+  dependencies:
+    "@adraffy/ens-normalize" "^1.11.0"
+    "@noble/ciphers" "^1.3.0"
+    "@noble/curves" "1.9.1"
+    "@noble/hashes" "^1.8.0"
+    "@scure/bip32" "^1.7.0"
+    "@scure/bip39" "^1.6.0"
+    abitype "^1.2.3"
+    eventemitter3 "5.0.1"
+
 ox@0.9.3:
   version "0.9.3"
   resolved "https://registry.yarnpkg.com/ox/-/ox-0.9.3.tgz#92cc1008dcd913e919364fd4175c860b3eeb18db"
@@ -16415,20 +16429,6 @@ vary@~1.1.2:
   resolved "https://registry.npmjs.org/vary/-/vary-1.1.2.tgz"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
-viem@^2.20.0, viem@^2.40.3:
-  version "2.47.12"
-  resolved "https://registry.yarnpkg.com/viem/-/viem-2.47.12.tgz#3055225d692fe545a4c652a5f592803cddb983fc"
-  integrity sha512-tz3CBeGUMU357aZqzlHskgAiEoC3k0/PuEwBSOxh4EQ3uuNr4GJ2Gc67ArNYmdm4MVTVL+rsRdKYoqbloUva6g==
-  dependencies:
-    "@noble/curves" "1.9.1"
-    "@noble/hashes" "1.8.0"
-    "@scure/bip32" "1.7.0"
-    "@scure/bip39" "1.6.0"
-    abitype "1.2.3"
-    isows "1.0.7"
-    ox "0.14.13"
-    ws "8.18.3"
-
 viem@^2.33.3:
   version "2.43.3"
   resolved "https://registry.yarnpkg.com/viem/-/viem-2.43.3.tgz#fa3e089f8f094db0be7a9218e8e6d6a7d40ee074"
@@ -16442,6 +16442,34 @@ viem@^2.33.3:
     isows "1.0.7"
     ox "0.11.1"
     ws "8.18.3"
+
+viem@^2.40.3:
+  version "2.47.12"
+  resolved "https://registry.yarnpkg.com/viem/-/viem-2.47.12.tgz#3055225d692fe545a4c652a5f592803cddb983fc"
+  integrity sha512-tz3CBeGUMU357aZqzlHskgAiEoC3k0/PuEwBSOxh4EQ3uuNr4GJ2Gc67ArNYmdm4MVTVL+rsRdKYoqbloUva6g==
+  dependencies:
+    "@noble/curves" "1.9.1"
+    "@noble/hashes" "1.8.0"
+    "@scure/bip32" "1.7.0"
+    "@scure/bip39" "1.6.0"
+    abitype "1.2.3"
+    isows "1.0.7"
+    ox "0.14.13"
+    ws "8.18.3"
+
+viem@^2.58.4:
+  version "2.58.4"
+  resolved "https://registry.yarnpkg.com/viem/-/viem-2.58.4.tgz#7194d68d1bb67c11998998aabd6b03aabce93524"
+  integrity sha512-zeYi2PliKbmJVbIvudHZrYJLh1XMXci6GBJznQLjhhGPGl9L7Hp/LmelpXhOM9VvlXwnvfW7/2PCgpjnc2j8MQ==
+  dependencies:
+    "@noble/curves" "1.9.1"
+    "@noble/hashes" "1.8.0"
+    "@scure/bip32" "1.7.0"
+    "@scure/bip39" "1.6.0"
+    abitype "1.2.3"
+    isows "1.0.7"
+    ox "0.14.67"
+    ws "8.21.0"
 
 vite@^6.4.5:
   version "6.4.6"
@@ -17010,7 +17038,7 @@ write-file-atomic@^5.0.1:
     imurmurhash "^0.1.4"
     signal-exit "^4.0.1"
 
-ws@8.18.0, ws@8.18.3, ws@8.23.0, ws@^8.18.0:
+ws@8.18.0, ws@8.18.3, ws@8.21.0, ws@8.23.0, ws@^8.18.0:
   version "8.23.0"
   resolved "https://registry.yarnpkg.com/ws/-/ws-8.23.0.tgz#e1af4314ad9d4cfde4684d08a9f09b322830e84e"
   integrity sha512-wCkmX8QMOrKjgO8HW2WyDbTSGeqkocxgDzS9iR79rEAexty6/2qzilx3Ag8Tqf9ykop3irLKle0MtVn5qjVnoQ==
@@ -17138,10 +17166,10 @@ yocto-queue@^0.1.0:
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-zod@^3.23.8:
-  version "3.25.76"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.25.76.tgz#26841c3f6fd22a6a2760e7ccb719179768471e34"
-  integrity sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==
+zod@^4.6.6:
+  version "4.6.7"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-4.6.7.tgz#e806cf64a7f4e37635ce9f2f52c04c3766f75e5b"
+  integrity sha512-g8W2D2kU6a8untc053fX1uVBKzM7yqAxW/3zwk83+6RyF2+SKOuV+c0wBDhUwzV1PaGapmZH+rmcUzPf+3CGwg==
 
 zustand@^4.3.6:
   version "4.4.7"
