@@ -18,6 +18,7 @@ import { MinedBlocks } from 'app/containers/Blocks/Loadable';
 import { NFTAsset } from 'app/containers/NFTAsset/Loadable';
 import styled from 'styled-components';
 import { ContractStatus } from '../AddressContractDetail/ContractStatus';
+import { ContractEventLogs } from './ContractEventLogs';
 
 export const Table = memo(
   ({ address, addressInfo }: { address: string; addressInfo: any }) => {
@@ -98,6 +99,15 @@ export const Table = memo(
             </div>
           ),
           content: <ContractContent contractInfo={addressInfo} />,
+        },
+        {
+          hidden: !addressInfo.verify?.exactMatch || !addressInfo.abi,
+          value: 'event-log',
+          action: 'eventLog',
+          label: <div>{t(translations.eventLogs.events)}</div>,
+          content: (
+            <ContractEventLogs address={address} contractInfo={addressInfo} />
+          ),
         },
       );
     }

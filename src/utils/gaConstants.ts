@@ -113,6 +113,7 @@ export const ScanEvent = {
       transfersCrc721: 'transfers_crc721',
       transfersCrc1155: 'transfers_crc1155',
       contractViewer: 'contract_viewer',
+      eventLog: 'event_log',
       minedBlocks: 'mined_blocks',
       tokenTransfers: 'token_transfers',
       tokenHolders: 'token_holders',
