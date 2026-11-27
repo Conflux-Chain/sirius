@@ -38,7 +38,7 @@
     "highcharts-react-official": "3.1.0",
     "husky": "4.3.8",
     "i18next": "26.3.4",
-    "i18next-browser-languagedetector": "4.0.2",
+    "i18next-browser-languagedetector": "7.2.1",
     "jest-styled-components": "7.4.1",
     "js-conflux-sdk": "2.5.1",
     "json-bigint": "1.0.0",
