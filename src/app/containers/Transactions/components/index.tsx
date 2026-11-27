@@ -200,7 +200,7 @@ export const TxnSwitcher = ({
   }
 };
 
-const StyledTableHeaderWrapper = styled.div`
+export const StyledTableHeaderWrapper = styled.div`
   .table-header-top {
     display: flex;
     justify-content: space-between;

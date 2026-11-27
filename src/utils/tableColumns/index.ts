@@ -6,6 +6,7 @@ import * as accountColunms from './account';
 import * as utils from './utils';
 import * as traceColumns from './trace';
 import * as verifiedContractsColumns from './verified-contracts';
+import * as eventLogsColumns from './eventLogs';
 
 export {
   blockColunms,
@@ -16,4 +17,5 @@ export {
   utils,
   traceColumns,
   verifiedContractsColumns,
+  eventLogsColumns,
 };

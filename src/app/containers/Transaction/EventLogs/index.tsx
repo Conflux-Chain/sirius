@@ -14,7 +14,7 @@ import { translations } from 'locales/i18n';
 import { Address } from './Address';
 import { Topics } from './Topics';
 import { Data } from './Data';
-import { Event } from 'app/components/TxnComponents/Event';
+import { EventName } from '@cfxjs/sirius-next-common/dist/components/EventLog/EventName';
 import { disassembleEvent } from 'app/components/TxnComponents/util';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { AddressLabel } from 'app/components/TxnComponents/AddressLabel';
@@ -24,7 +24,7 @@ interface Props {
   hash: string;
 }
 
-const createRawEventInfo = log => {
+export const createRawEventInfo = log => {
   const splitData = _.words(log.data.substr(2), /.{64}/g).map(w => ({
     hexValue: w,
   }));
@@ -185,7 +185,7 @@ const EventLog = ({ log }) => {
                 size="small"
                 noBorder
               >
-                <Event fnName={fnName} args={args} />
+                <EventName name={fnName} args={args} />
               </Description>
             ) : null}
             <Description

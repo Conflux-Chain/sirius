@@ -18,6 +18,12 @@ import {
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
+import {
+  eventLogErrorKeys,
+  eventLogFields,
+  readEventLogFilters,
+  validateEventLogFilters,
+} from 'utils/eventLogFilters';
 
 type SearchFormItemsProps =
   | undefined
@@ -40,6 +46,9 @@ export interface AdvancedSearchFormProps {
   button?: SearchFormItemsProps;
   rangePicker?: SearchFormItemsProps;
   contractName?: SearchFormItemsProps;
+  fromEpoch?: SearchFormItemsProps;
+  toEpoch?: SearchFormItemsProps;
+  topic0?: SearchFormItemsProps;
 }
 
 interface QueryProps {
@@ -143,6 +152,33 @@ const defaultProps = {
       xl: 6,
     },
   },
+  fromEpoch: {
+    col: {
+      xs: 24,
+      sm: 6,
+      md: 6,
+      lg: 6,
+      xl: 6,
+    },
+  },
+  toEpoch: {
+    col: {
+      xs: 24,
+      sm: 6,
+      md: 6,
+      lg: 6,
+      xl: 6,
+    },
+  },
+  topic0: {
+    col: {
+      xs: 24,
+      sm: 12,
+      md: 12,
+      lg: 12,
+      xl: 12,
+    },
+  },
   button: {
     col: {
       xs: 24,
@@ -155,7 +191,8 @@ const defaultProps = {
 };
 
 const normalizeNumericString = (value, prevValue) => {
-  return value === '' || isSafeNumberOrNumericStringInput(value)
+  return value === '' ||
+    (isSafeNumberOrNumericStringInput(value) && !value.includes('.'))
     ? value
     : prevValue;
 };
@@ -222,6 +259,9 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
     transactionHash,
     rangePicker,
     contractName,
+    fromEpoch,
+    toEpoch,
+    topic0,
   } = props;
   const hasTokenField = Boolean(token);
   const tokenAddresses = useMemo(() => {
@@ -254,6 +294,28 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n.language]);
+
+  const eventLogRule = (field: typeof eventLogFields[number]) => ({
+    getFieldValue,
+  }) => ({
+    validator: (_, value) => {
+      const error = validateEventLogFilters({
+        fromEpoch: getFieldValue('fromEpoch'),
+        [field]: value,
+      })[field];
+      return error
+        ? Promise.reject(
+            new Error(
+              t(
+                translations.general.advancedSearch.error[
+                  eventLogErrorKeys[error]
+                ],
+              ),
+            ),
+          )
+        : Promise.resolve();
+    },
+  });
 
   const addressInputPlaceholder = useMemo(() => {
     return getAddressInputPlaceholder();
@@ -289,12 +351,19 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
         maxEpochNumber,
       );
 
+      const eventLogValues = readEventLogFilters(query);
+
       const value = {
         ...Object.keys(props)
           .map(k => ({
             [k]: query[k] || '',
           }))
           .reduce((prev, next) => ({ ...prev, ...next }), {}),
+        ...Object.fromEntries(
+          eventLogFields
+            .filter(field => Boolean(props[field]))
+            .map(field => [field, eventLogValues[field]]),
+        ),
         // special handle with fromOrTo value
         fromOrTo: from || to,
         // special handle with token value
@@ -306,6 +375,8 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
       };
 
       form.setFieldsValue(value);
+      // Validation failures are already displayed by Form.Item.
+      void form.validateFields().catch(() => {});
     } catch (e) {}
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
@@ -368,6 +439,9 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
       minTimestamp,
       maxTimestamp,
       contractName,
+      fromEpoch,
+      toEpoch,
+      topic0,
       ...others
     } = qs.parse(search);
 
@@ -447,6 +521,15 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
     }
     if (props.contractName && values.contractName) {
       query.contractName = values.contractName;
+    }
+    if (props.fromEpoch && values.fromEpoch) {
+      query.fromEpoch = values.fromEpoch;
+    }
+    if (props.toEpoch && values.toEpoch) {
+      query.toEpoch = values.toEpoch;
+    }
+    if (props.topic0 && values.topic0) {
+      query.topic0 = values.topic0;
     }
 
     const urlWithQuery = qs.stringifyUrl({
@@ -803,6 +886,58 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
         </Col>,
       );
     }
+    if (fromEpoch) {
+      const col =
+        typeof fromEpoch !== 'boolean'
+          ? fromEpoch?.col
+          : defaultProps.fromEpoch.col;
+
+      children.push(
+        <Col {...col} key="fromEpoch">
+          <Form.Item
+            name="fromEpoch"
+            label={t(translations.general.advancedSearch.label.fromEpoch)}
+            rules={[eventLogRule('fromEpoch')]}
+          >
+            <Input placeholder="0" allowClear />
+          </Form.Item>
+        </Col>,
+      );
+    }
+    if (toEpoch) {
+      const col =
+        typeof toEpoch !== 'boolean' ? toEpoch?.col : defaultProps.toEpoch.col;
+
+      children.push(
+        <Col {...col} key="toEpoch">
+          <Form.Item
+            name="toEpoch"
+            label={t(translations.general.advancedSearch.label.toEpoch)}
+            dependencies={['fromEpoch']}
+            rules={[eventLogRule('toEpoch')]}
+          >
+            <Input placeholder="Latest" allowClear />
+          </Form.Item>
+        </Col>,
+      );
+    }
+    if (topic0) {
+      const col =
+        typeof topic0 !== 'boolean' ? topic0?.col : defaultProps.topic0.col;
+
+      children.push(
+        <Col {...col} key="topic0">
+          <Form.Item
+            name="topic0"
+            label={t(translations.general.advancedSearch.label.topic0)}
+            normalize={value => value.trim()}
+            rules={[eventLogRule('topic0')]}
+          >
+            <Input placeholder="0x..." allowClear />
+          </Form.Item>
+        </Col>,
+      );
+    }
 
     const colButton =
       typeof props.button !== 'boolean'
@@ -842,7 +977,7 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
 
     return children;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fromOrToValue]);
+  }, [fromOrToValue, search, i18n.language]);
 
   return (
     <StyledAdvancedFormWrapper>
