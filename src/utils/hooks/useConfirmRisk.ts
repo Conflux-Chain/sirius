@@ -51,8 +51,8 @@ export const useConfirmRisk = (blockHash: string, epochNumber: number) => {
 
   const loop = (risk?, timeout = 2000) => {
     // getRisk again
-    clearInterval(ref.current);
-    ref.current = setTimeout(() => {
+    window.clearTimeout(ref.current);
+    ref.current = window.setTimeout(() => {
       getRisk(risk);
     }, timeout);
   };
@@ -61,7 +61,7 @@ export const useConfirmRisk = (blockHash: string, epochNumber: number) => {
     loop('', 0);
 
     return () => {
-      clearInterval(ref.current);
+      window.clearTimeout(ref.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blockHash, epochNumber]);

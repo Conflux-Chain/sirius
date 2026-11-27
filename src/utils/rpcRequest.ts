@@ -3,6 +3,7 @@ import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import lodash from 'lodash';
 import { publishRequestError } from '@cfxjs/sirius-next-common/dist/utils/pubsub';
 import BigNumber from 'bignumber.js';
+import ENV_CONFIG from 'env';
 
 // @ts-ignore
 window.SDK = SDK;
@@ -346,5 +347,54 @@ export const getTransactionByHash = async (...args) => {
 //     throw e;
 //   }
 // };
+
+export const cfxRequest = async (method: string, ...args: any[]) => {
+  try {
+    if (!ENV_CONFIG.ENV_RPC_SERVER) {
+      throw new Error('rpc server is not set');
+    }
+    const response = await window.fetch(ENV_CONFIG.ENV_RPC_SERVER, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        method,
+        params: args,
+        id: `${Date.now().toString(16)}${Math.random().toString(16).slice(2)}`,
+      }),
+    });
+    const data = await response.json().catch(() => null);
+    if (data?.error) {
+      const error = new Error(
+        data.error.message ?? 'Unknown Error',
+      ) as Error & {
+        code: number;
+      };
+      error.code = data.error.code;
+      throw error;
+    }
+    if (!response.ok) {
+      const error = new Error(
+        `HTTP ${response.status}${
+          response.statusText ? ` ${response.statusText}` : ''
+        }`,
+      ) as Error & {
+        code: number;
+      };
+      error.code = response.status;
+      throw error;
+    }
+    if (!data || !('result' in data)) {
+      throw new Error('Invalid JSON-RPC response');
+    }
+    return data.result;
+  } catch (e) {
+    e.method = method;
+    publishRequestError(e, 'rpc');
+    throw e;
+  }
+};
 
 export default request;

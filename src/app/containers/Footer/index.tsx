@@ -17,6 +17,7 @@ import { Language } from './Language';
 import { ScanEvent } from 'utils/gaConstants';
 import { HIDE_IN_DOT_NET } from 'utils/constants';
 import { hideInDotNet } from 'utils';
+import { matchesDomain } from 'utils/hostname';
 import { getNetwork } from '@cfxjs/sirius-next-common/dist/utils';
 
 import iconWechatQrcode from 'images/footer/wechat-qrcode.png';
@@ -395,7 +396,7 @@ export function Footer() {
     // ),
   };
   const ICP = useMemo(() => {
-    return window.location.hostname.includes('confluxscan.net') ? (
+    return matchesDomain(window.location.hostname, 'confluxscan.net') ? (
       <CopyRight>
         <ICPLink href="https://beian.miit.gov.cn">沪ICP备20007940号-2</ICPLink>
         <ICPLink href="https://beian.mps.gov.cn/#/query/webSearch?code=31010402333972">

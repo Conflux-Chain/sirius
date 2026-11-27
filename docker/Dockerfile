@@ -1,8 +1,9 @@
-FROM node:20 AS builder
+FROM node:22.23.4 AS builder
 
 WORKDIR /app
 COPY ./package.json .
 COPY ./yarn.lock .
+COPY ./patches ./patches
 RUN yarn install --frozen-lockfile
 
 COPY . .

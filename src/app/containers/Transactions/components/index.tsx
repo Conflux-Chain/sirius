@@ -25,10 +25,6 @@ interface FooterProps {
   pathname: string;
 }
 
-interface QueryProps {
-  [index: string]: string;
-}
-
 interface TitleProps {
   address: string;
   total: number;
@@ -204,7 +200,7 @@ export const TxnSwitcher = ({
   }
 };
 
-const StyledTableHeaderWrapper = styled.div`
+export const StyledTableHeaderWrapper = styled.div`
   .table-header-top {
     display: flex;
     justify-content: space-between;

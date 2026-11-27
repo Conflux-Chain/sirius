@@ -7,14 +7,16 @@ Source code of [Conflux Scan](https://confluxscan.org)
 ## environment
 
 ```
-node >= 18.18.2
-npm >= 9.8.1
+Node.js 22.x (>= 22.12.0; .nvmrc, Docker and CI use 22.23.4)
+Yarn Classic 1.22.x
 ```
 
 ## install
 
 ```bash
-yarn install
+nvm install
+nvm use
+yarn install --frozen-lockfile
 ```
 
 ## development

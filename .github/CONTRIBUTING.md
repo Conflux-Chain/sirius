@@ -36,12 +36,14 @@ Hi! We are really excited that you are interested in contributing to Conflux. Be
 
 ## Development Setup
 
-You will need [Node.js](http://nodejs.org) **version 8+**, and [yarn](https://yarnpkg.com/en/docs/install).
+You will need [Node.js](https://nodejs.org) **22.x (>=22.12.0)** and [Yarn Classic](https://classic.yarnpkg.com/en/docs/install) **1.22.x**. The `.nvmrc`, Docker build and CircleCI jobs use Node.js **22.23.4**.
 
 After cloning the repo, run:
 
 ```bash
-$ yarn # install the dependencies of the project
+$ nvm install
+$ nvm use
+$ yarn install --frozen-lockfile
 ```
 
 Please use yarn instead of npm.
@@ -52,10 +54,10 @@ Please use yarn instead of npm.
 
 ```bash
 # serve watch and auto re-build the site
-$ yarn start
+$ yarn start:core
 
 # watch and auto re-run unit tests
-$ yarn test:watch
+$ yarn test
 
 # build the site
 $ yarn build
@@ -63,7 +65,7 @@ $ yarn build
 
 There are some other scripts available in the `scripts` section of the `package.json` file.
 
-The default test script will do the following: lint with ESLint -> unit tests with coverage. **Please make sure to have this pass successfully before submitting a PR.** Although the same tests will be run against your PR on the CI server, it is better to have it working locally.
+Run `yarn checkTs`, `yarn lint`, and `CI=true yarn test --watchAll=false --runInBand --coverage` before submitting a PR. Although the same tests will be run against your PR on the CI server, it is better to have it working locally.
 
 ## Project Structure
 

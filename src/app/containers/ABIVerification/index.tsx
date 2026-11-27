@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -28,8 +28,15 @@ export const ABIVerification = () => {
   const [txData, setTxData] = useState('');
   const [abi, setAbi] = useState('');
 
-  const getTxData = useCallback(
-    debounce((_abi: string) => {
+  const scheduleValidation = useMemo(
+    () => debounce((validate: () => void) => validate(), 500),
+    [],
+  );
+  useEffect(() => () => scheduleValidation.cancel(), [scheduleValidation]);
+
+  const handleABIChange = (_abi: string) => {
+    setAbi(_abi);
+    scheduleValidation(() => {
       const abi = _abi.trim();
       if (!abi) return;
       try {
@@ -59,13 +66,7 @@ export const ABIVerification = () => {
         });
         setTxData('');
       }
-    }, 500),
-    [],
-  );
-
-  const handleABIChange = (_abi: string) => {
-    setAbi(_abi);
-    getTxData(_abi);
+    });
   };
   return (
     <StyledABIVerificationWrapper>

@@ -22,7 +22,7 @@ export function FinalizedInterval({ preview = false }: ChildProps) {
         const data1: any = [];
         const data2: any = [];
 
-        data?.list?.map((d, i) => {
+        data?.list?.forEach((d, i) => {
           const t = dayjs.utc(d.day).valueOf();
           data1.push([t, Number(d.finalize_second_gap)]);
           data2.push([t, Number(d.finalize_epoch_gap)]);
