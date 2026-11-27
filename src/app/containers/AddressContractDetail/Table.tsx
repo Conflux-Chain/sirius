@@ -101,7 +101,7 @@ export const Table = memo(
           content: <ContractContent contractInfo={addressInfo} />,
         },
         {
-          hidden: !addressInfo.verify?.exactMatch || !addressInfo.abi,
+          hidden: addressInfo.abi === t(translations.general.loading),
           value: 'event-log',
           action: 'eventLog',
           label: <div>{t(translations.eventLogs.events)}</div>,
